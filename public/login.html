@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>登入聊天室</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <div class="login-container">
+    <h2>登入聊天室</h2>
+    <form onsubmit="login(event)">
+      <input type="text" id="username" placeholder="帳號" required>
+      <input type="password" id="password" placeholder="密碼" required>
+      <button type="submit">登入</button>
+    </form>
+  </div>
+  <script>
+    function login(event) {
+      event.preventDefault();
+      const u = document.getElementById('username').value;
+      const p = document.getElementById('password').value;
+      const users = [{ username: 'user1', password: '1234' }, { username: 'user2', password: 'abcd' }];
+      const valid = users.find(user => user.username === u && user.password === p);
+      if (valid) {
+        localStorage.setItem('username', u);
+        window.location.href = 'chat.html';
+      } else {
+        alert('帳號或密碼錯誤');
+      }
+    }
+  </script>
+</body>
+</html>
