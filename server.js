@@ -8,6 +8,14 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
+const fs = require('fs');
+
+// 確保 uploads 資料夾存在
+const uploadsDir = path.join(__dirname, 'public/uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
 const users = [
   { username: 'user1', password: '1234' },
   { username: 'user2', password: 'abcd' }
