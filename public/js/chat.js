@@ -16,7 +16,7 @@ socket.on("chat history", (history) => {
 form.addEventListener("submit", function(e) {
   e.preventDefault();
   if (input.value.trim()) {
-    const msg = { user: username, text: input.value, time: new Date().toLocaleTimeString() };
+    const msg = { id: Date.now(), user: username, text: input.value, time: new Date().toISOString() };
     socket.emit("chat message", msg);
     input.value = "";
   }
@@ -30,15 +30,22 @@ imageInput.addEventListener("change", () => {
   fetch("/upload", { method: "POST", body: formData })
     .then(res => res.json())
     .then(data => {
-      const msg = { user: username, image: data.imageUrl, time: new Date().toLocaleTimeString() };
+      const msg = { id: Date.now(), user: username, image: data.imageUrl, time: new Date().toISOString() };
       socket.emit("chat message", msg);
     });
 });
 
+function formatTime(isoTime) {
+  const d = new Date(isoTime);
+  return d.toLocaleString("zh-TW", { hour12: false });
+}
+
 function appendMessage(msg) {
   const div = document.createElement("div");
   div.className = "message";
-  div.innerHTML = "<strong>" + msg.user + "</strong> (" + msg.time + "): ";
+  div.dataset.id = msg.id;
+
+  div.innerHTML = "<strong>" + msg.user + "</strong> (" + formatTime(msg.time) + "): ";
   if (msg.text) {
     div.innerHTML += msg.text;
   }
@@ -54,6 +61,18 @@ function appendMessage(msg) {
     div.appendChild(document.createElement("br"));
     div.appendChild(img);
   }
+
+  if (msg.user === username) {
+    const btn = document.createElement("button");
+    btn.textContent = "🗑️";
+    btn.style.marginLeft = "10px";
+    btn.onclick = () => {
+      socket.emit("delete message", msg.id);
+      div.remove();
+    };
+    div.appendChild(btn);
+  }
+
   chat.appendChild(div);
   chat.scrollTop = chat.scrollHeight;
 }
