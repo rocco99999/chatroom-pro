@@ -76,3 +76,10 @@ function appendMessage(msg) {
   chat.appendChild(div);
   chat.scrollTop = chat.scrollHeight;
 }
+
+// 輸入欄 focus 時自動捲到底部
+input.addEventListener("focus", () => {
+  setTimeout(() => {
+    chat.scrollTop = chat.scrollHeight;
+  }, 300);
+});
