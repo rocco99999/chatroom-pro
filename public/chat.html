@@ -5,12 +5,17 @@
   <title>聊天室</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body {
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
       font-family: sans-serif;
+      overflow: hidden;
+    }
+    body {
       display: flex;
       flex-direction: column;
       height: 100dvh;
-      margin: 0;
     }
     #chat {
       flex: 1;
@@ -19,28 +24,24 @@
       background: #f2f2f2;
     }
     #form {
-  display: flex;
-  flex-wrap: wrap; /* 新增：可自動換行 */
-  align-items: center;
-  padding: 0.5em;
-  gap: 0.5em;
-  border-top: 1px solid #ccc;
-  background: #fff;
-}
-
-#form input[type="text"] {
-  flex: 1 1 auto;
-  min-width: 0;
-}
-
-#form input[type="file"] {
-  flex: 0 0 auto;
-}
-
-#form button {
-  flex: 0 0 auto;
-}
-
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      padding: 0.5em;
+      gap: 0.5em;
+      border-top: 1px solid #ccc;
+      background: #fff;
+    }
+    #form input[type="text"] {
+      flex: 1 1 auto;
+      min-width: 0;
+      padding: 0.6em;
+      font-size: 1em;
+    }
+    #form input[type="file"], #form button {
+      flex: 0 0 auto;
+      font-size: 1em;
+    }
     img {
       max-width: 100%;
       margin-top: 0.5em;
@@ -67,5 +68,27 @@
   </form>
   <script src="/socket.io/socket.io.js"></script>
   <script src="js/chat.js"></script>
+  <script>
+    const chat = document.getElementById('chat');
+    const input = document.getElementById('m');
+
+    function scrollToBottom() {
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    input.addEventListener("focus", () => {
+      setTimeout(scrollToBottom, 300);
+    });
+
+    input.addEventListener("blur", () => {
+      setTimeout(scrollToBottom, 300);
+    });
+
+    window.addEventListener('resize', () => {
+      setTimeout(scrollToBottom, 300);
+    });
+
+    document.addEventListener('DOMContentLoaded', scrollToBottom);
+  </script>
 </body>
 </html>
