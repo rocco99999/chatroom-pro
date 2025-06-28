@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <title>登入聊天室</title>
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <div class="login-container">
     <h2>登入聊天室</h2>
-    <form onsubmit="login(event)">
-      <input type="text" id="username" placeholder="帳號" required>
-      <input type="password" id="password" placeholder="密碼" required>
-      <button type="submit">登入</button>
-    </form>
+    <input type="text" id="username" placeholder="帳號">
+    <input type="password" id="password" placeholder="密碼">
+    <button onclick="login()">登入</button>
+    <p id="error" style="color:red;"></p>
   </div>
   <script>
-    function login(event) {
-      event.preventDefault();
-      const u = document.getElementById('username').value;
-      const p = document.getElementById('password').value;
-      const users = [{ username: 'Rocco0401', password: '02129012' }, { username: 'ywn80584771', password: 'abcd' }];
-      const valid = users.find(user => user.username === u && user.password === p);
-      if (valid) {
-        localStorage.setItem('username', u);
-        window.location.href = 'chat.html';
+    const users = [
+      { username: 'user1', password: '1234' },
+      { username: 'user2', password: 'abcd' },
+      { username: 'user3', password: '5678' }
+    ];
+    function login() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const found = users.find(u => u.username === username && u.password === password);
+      if (found) {
+        sessionStorage.setItem('username', username);
+        window.location.href = "chat.html";
       } else {
-        alert('帳號或密碼錯誤');
+        document.getElementById('error').innerText = "帳號或密碼錯誤";
       }
     }
   </script>

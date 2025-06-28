@@ -1,5 +1,5 @@
 {
-  "name": "chatroom-pro",
+  "name": "chatroom-pro-json",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
