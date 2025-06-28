@@ -1,19 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <title>聊天室</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+    }
+    #chat {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1em;
+      background: #f2f2f2;
+    }
+    #form {
+      display: flex;
+      padding: 0.5em;
+      gap: 0.5em;
+      border-top: 1px solid #ccc;
+      background: #fff;
+    }
+    #form input[type=text] {
+      flex: 1;
+      padding: 0.6em;
+      font-size: 1em;
+    }
+    #form input[type=file], #form button {
+      font-size: 1em;
+    }
+    img {
+      max-width: 100%;
+      margin-top: 0.5em;
+      border-radius: 8px;
+    }
+    button {
+      cursor: pointer;
+    }
+    .message {
+      margin-bottom: 1em;
+      background: white;
+      padding: 0.5em;
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+  </style>
 </head>
 <body>
-  <div class="chat-container">
-    <div id="chat"></div>
-    <form id="form">
-      <input id="m" autocomplete="off" placeholder="輸入訊息..." />
-      <input type="file" id="imageInput">
-      <button>送出</button>
-    </form>
-  </div>
+  <div id="chat"></div>
+  <form id="form">
+    <input id="m" autocomplete="off" placeholder="輸入訊息..." />
+    <input type="file" id="imageInput" accept="image/*">
+    <button>送出</button>
+  </form>
   <script src="/socket.io/socket.io.js"></script>
   <script src="js/chat.js"></script>
 </body>
